@@ -1,19 +1,24 @@
 package com.banks.accountsync
 
+import android.Manifest
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.ContentResolver
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         private const val TAG = "MainActivity"
 
     }
+
     val ACCOUNT_TYPE =
         "com.banks.accountsync.account.type" // TYPE必须与account_preferences.xml中的TYPE保持一致
 
@@ -40,9 +45,25 @@ class MainActivity : AppCompatActivity() {
             // 自动同步
             val bundle = Bundle()
             ContentResolver.setIsSyncable(account, AccountProvider.AUTHORITY, 1)
-            ContentResolver.setSyncAutomatically(account, AccountProvider.AUTHORITY,true)
-            ContentResolver.addPeriodicSync(account, AccountProvider.AUTHORITY,bundle, 30)
+            ContentResolver.setSyncAutomatically(account, AccountProvider.AUTHORITY, true)
+            ContentResolver.addPeriodicSync(account, AccountProvider.AUTHORITY, bundle, 30)
 
         }
+
+        requestSdcardPermission()
     }
+
+    fun requestSdcardPermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                100)
+        }
+    }
+
 }
