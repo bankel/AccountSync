@@ -34,11 +34,10 @@ class MainActivity : AppCompatActivity() {
         val accounts: Array<Account> =
             mAccountManager.getAccountsByType(ACCOUNT_TYPE) // 获取系统帐户列表中已添加的帐户是否存在我们的帐户，用TYPE做为标识
 
-        if (accounts.size > 0) {
+        if (accounts.isNotEmpty()) {
             Toast.makeText(this, "已添加当前登录的帐户", Toast.LENGTH_SHORT).show()
         } else {
-            val account =
-                Account(getString(R.string.app_name), ACCOUNT_TYPE)
+            val account = Account(getString(R.string.app_name), ACCOUNT_TYPE)
             mAccountManager.addAccountExplicitly(account, null, null) // 帐户密码和信息这里用null演示
             Toast.makeText(this, "添加帐户", Toast.LENGTH_SHORT).show()
 
@@ -60,9 +59,14 @@ class MainActivity : AppCompatActivity() {
         ) {
             // Permission is not granted
 
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
-                100)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                100
+            )
         }
     }
 
