@@ -5,12 +5,10 @@ import android.accounts.AccountManager
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.banks.accountsync.AccountSyncManager
-import com.banks.accountsync.BuildConfig
 import com.banks.accounttest.R
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AccountSyncManager.syncInit(this)
-//        requestSdcardPermission()
+        requestSdcardPermission()
     }
 
     fun requestSdcardPermission() {
