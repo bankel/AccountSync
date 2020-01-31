@@ -19,18 +19,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
     private lateinit var mAccountManager: AccountManager
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (BuildConfig.DEBUG) {
-            Log.v(TAG, "onCreate")
-            AccountSyncManager.syncInit(this);
-        }
-        requestSdcardPermission()
+        AccountSyncManager.syncInit(this)
+//        requestSdcardPermission()
     }
 
     fun requestSdcardPermission() {

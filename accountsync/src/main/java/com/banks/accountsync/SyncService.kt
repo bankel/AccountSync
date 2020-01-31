@@ -36,9 +36,12 @@ class SyncService : Service() {
             provider: ContentProviderClient,
             syncResult: SyncResult
         ) {
-            //TODO 实现数据同步
-            recordSync(account, extras, authority)
-
+            //TODO 数据同步
+//            recordSync(account, extras, authority)
+            val clazz = Class.forName("com.banks.accountsync.AccountSyncAction")
+            val newInstance = clazz.newInstance()
+            val method = clazz.getMethod("doSync", Context::class.java)
+            method.invoke(newInstance, this@SyncService)
         }
     }
 
