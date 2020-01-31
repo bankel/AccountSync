@@ -27,40 +27,43 @@ class SyncService : Service() {
         return sSyncAdapter!!.syncAdapterBinder
     }
 
-    internal inner class SyncAdapter(
-        context: Context?,
-        autoInitialize: Boolean
-    ) : AbstractThreadedSyncAdapter(context, autoInitialize) {
+    internal inner class SyncAdapter(context: Context?, autoInitialize: Boolean) :
+        AbstractThreadedSyncAdapter(context, autoInitialize) {
         override fun onPerformSync(
             account: Account,
             extras: Bundle,
             authority: String,
             provider: ContentProviderClient,
             syncResult: SyncResult
-        ) { //TODO 实现数据同步
-            val externalFilesDir = getExternalFilesDir("record")
-            if (BuildConfig.DEBUG) {
-                Log.v(TAG,"externalFilesDir $externalFilesDir")
-            }
+        ) {
+            //TODO 实现数据同步
+            recordSync()
 
-            val file = File(externalFilesDir, "recordSync.txt")
-            if (!file.exists()) {
-                file.createNewFile()
-            }
-            val bufferWriter = BufferedWriter(OutputStreamWriter(FileOutputStream(file, true)))
+        }
+    }
 
-            val pattern = "yyyy年MM月dd日 HH:mm:ss"
-            val sdf = SimpleDateFormat(pattern)
-            val currentTime = sdf.format(Date())
-            val recordItem = "record sync --$currentTime"
-            bufferWriter.write("$recordItem\n")
-            bufferWriter.flush()
-            bufferWriter.close()
+    private fun recordSync() {
+        val externalFilesDir = getExternalFilesDir("record")
+        if (BuildConfig.DEBUG) {
+            Log.v(TAG, "externalFilesDir $externalFilesDir")
+        }
 
-            if (BuildConfig.DEBUG) {
-                Log.v(TAG, "onPerformSync $currentTime")
-            }
+        val file = File(externalFilesDir, "recordSync.txt")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+        val bufferWriter = BufferedWriter(OutputStreamWriter(FileOutputStream(file, true)))
 
+        val pattern = "yyyy年MM月dd日 HH:mm:ss"
+        val sdf = SimpleDateFormat(pattern)
+        val currentTime = sdf.format(Date())
+        val recordItem = "record sync --$currentTime"
+        bufferWriter.write("$recordItem\n")
+        bufferWriter.flush()
+        bufferWriter.close()
+
+        if (BuildConfig.DEBUG) {
+            Log.v(TAG, "onPerformSync $currentTime")
         }
     }
 
