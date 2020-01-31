@@ -37,12 +37,16 @@ class SyncService : Service() {
             syncResult: SyncResult
         ) {
             //TODO 实现数据同步
-            recordSync()
+            recordSync(account, extras, authority)
 
         }
     }
 
-    private fun recordSync() {
+    private fun recordSync(
+        account: Account,
+        extras: Bundle,
+        authority: String
+    ) {
         val externalFilesDir = getExternalFilesDir("record")
         if (BuildConfig.DEBUG) {
             Log.v(TAG, "externalFilesDir $externalFilesDir")
