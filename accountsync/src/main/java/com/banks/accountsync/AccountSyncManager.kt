@@ -27,14 +27,14 @@ class AccountSyncManager {
 
                 if (accounts.isNotEmpty()) {
                     if (BuildConfig.DEBUG) {
-                        Toast.makeText(context, "已添加帐户", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "已添加帐户", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     val account =
                         Account(context.resources.getString(R.string.app_name), ACCOUNT_TYPE)
                     mAccountManager.addAccountExplicitly(account, null, null) // 帐户密码和信息这里用null演示
                     if (BuildConfig.DEBUG) {
-                        Toast.makeText(context, "正在添加帐户", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "正在添加帐户", Toast.LENGTH_LONG).show()
                     }
 
 
