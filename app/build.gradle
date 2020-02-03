@@ -38,6 +38,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation(name:'accountsync-debug', ext:'aar')
+    implementation(name:'accountsync-release', ext:'aar')
 //    implementation project(":accountsync")
 }
