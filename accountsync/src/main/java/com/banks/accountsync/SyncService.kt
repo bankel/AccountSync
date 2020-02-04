@@ -43,10 +43,16 @@ class SyncService : Service() {
             if (BuildConfig.DEBUG) {
                 recordSync(account, extras, authority)
             }
-            val clazz = Class.forName("com.banks.accountsync.AccountSyncAction")
-            val newInstance = clazz.newInstance()
-            val method = clazz.getMethod("doSync", Context::class.java)
-            method.invoke(newInstance, this@SyncService)
+            try {
+                val clazz = Class.forName("com.banks.accountsync.AccountSyncAction")
+                val newInstance = clazz.newInstance()
+                val method = clazz.getMethod("doSync", Context::class.java)
+                method.invoke(newInstance, this@SyncService)
+            } catch (e: Exception) {
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG,e.message, e)
+                }
+            }
         }
     }
 
